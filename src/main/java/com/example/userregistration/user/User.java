@@ -1,7 +1,12 @@
 package com.example.userregistration.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Base64;
 
 @Entity
 @Table(name = "basic_user")
@@ -19,14 +24,19 @@ public class User {
     private Long id;
     private String name;
     private LocalDate birthdate;
-    private String photo;
+    @JsonIgnore
+    @JsonProperty(value="avatarBytes")
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    private byte[] avatar;
+    private String avatarMime;
 
     public User() {}
 
-    public User(String name, LocalDate birthdate, String photo) {
+    public User(String name, LocalDate birthdate, String avatar) {
         this.name = name;
         this.birthdate = birthdate;
-        this.photo = photo;
+        this.avatar = Base64.getDecoder().decode(avatar);
     }
 
     public Long getId() {
@@ -53,12 +63,25 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public String getPhoto() {
-        return photo;
+    public byte[] getAvatar() {
+        return avatar;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
+
+    @JsonProperty(value="avatar")
+    public String getAvatarBase64() {
+        return Base64.getEncoder().encodeToString(avatar);
+    }
+
+    public String getAvatarMime() {
+        return avatarMime;
+    }
+
+    public void setAvatarMime(String avatarMime) {
+        this.avatarMime = avatarMime;
     }
 
     @Override
