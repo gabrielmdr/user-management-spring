@@ -35,8 +35,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void updateUser(User user) {
-        Long id = user.getId();
+    public void updateUser(Long id, User user) {
         if (id == null) {
             throw new UserMissingFieldException("No user ID specified.");
         }
