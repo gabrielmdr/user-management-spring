@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -44,5 +45,14 @@ public class UserService {
             throw new UserNotFoundException("User with ID " + id + " does not exist.");
         }
         userRepository.save(user);
+    }
+
+    public User getUser(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            throw new UserNotFoundException("User with ID " + id + " does not exist.");
+        }
     }
 }

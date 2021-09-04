@@ -18,7 +18,14 @@ public class UserController {
 
     @GetMapping
     public List<User> getUsers() {
+        System.out.println("Get Users");
         return userService.getUsers();
+    }
+
+    @GetMapping(path = "/{userId}")
+    public User getUser(@PathVariable("userId") Long id) {
+        System.out.println("Get User");
+        return userService.getUser(id);
     }
 
     @PostMapping
