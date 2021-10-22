@@ -27,6 +27,6 @@ Then run the following command:
 $ ./mvnw spring-boot:run
 ```
 
-# 📝 License
+## 📝 License
 
 This project is under the MIT license. Check [LICENSE](LICENSE).
